@@ -1,0 +1,1 @@
+RTClock is a fork of ECS' default Clock screensaver for MineOS, but built as an app and it uses computer time instead of in-game one. So if you set your Minecraft PC to run in US timezone, you'll get US timezone clock.
