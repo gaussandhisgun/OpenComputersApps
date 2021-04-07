@@ -170,8 +170,8 @@ local function truncateEmoji(text)
 end
 
 local function drawSelection(object, backgroundColor, textColor)
-	screen.drawText(object.x, object.y - 1, backgroundColor, string.rep("?", object.width - 1) .. "?")
-	screen.drawText(object.x, object.y + object.height, backgroundColor, string.rep("?", object.width - 1) .. "?")
+	screen.drawText(object.x, object.y - 1, backgroundColor, string.rep("вЈ¤", object.width - 1) .. "вЈґ")
+	screen.drawText(object.x, object.y + object.height, backgroundColor, string.rep("в ›", object.width - 1) .. "в »")
 	screen.drawRectangle(object.x, object.y, object.width, object.height, backgroundColor, textColor, " ")
 end
 
@@ -357,7 +357,7 @@ local function newAvatar(x, y, width, height, name, peerID)
 	object.shortcut = getNameShortcut(name)
 	object.peerID = peerID
 
-	-- Нехуй на группы тыкать, НИРИАЛИЗОВАНО ИЩО
+	-- РќРµС…СѓР№ РЅР° РіСЂСѓРїРїС‹ С‚С‹РєР°С‚СЊ, РќРР РРђР›РР—РћР’РђРќРћ РР©Рћ
 	if peerID > 0 then
 		object.eventHandler = avatarEventHandler
 	end
@@ -367,7 +367,7 @@ end
 
 local function verticalLineDraw(object)
 	for i = 1, object.height do
-		screen.drawText(object.x, object.y + i - 1, object.color, "?")
+		screen.drawText(object.x, object.y + i - 1, object.color, "в”‚")
 	end
 end
 
@@ -381,7 +381,7 @@ local function newVerticalLine(x, y, height, color)
 end
 
 local function horizontalLineDraw(object)
-	screen.drawText(object.x, object.y, object.color, string.rep("?", object.width))
+	screen.drawText(object.x, object.y, object.color, string.rep("в”Ђ", object.width))
 end
 
 local function newHorizontalLine(x, y, width, color)
@@ -397,18 +397,18 @@ local function attachmentDraw(object)
 	-- screen.drawRectangle(object.x, object.y, object.width, 1, 0x880000, 0xA5A5A5, " ")
 	local x, y, typeLength = object.x, object.y, unicode.len(object.type)
 	-- Type
-	screen.drawText(x, y, object.typeB, "?"); x = x + 1
+	screen.drawText(x, y, object.typeB, "в °"); x = x + 1
 	screen.drawRectangle(x, y, typeLength + 2, 1, object.typeB, object.typeT, " "); x = x + 1
 	screen.drawText(x, y, object.typeT, object.type); x = x + typeLength + 1
 
 	local textB = object.selected and style.blockAttachmentTextSelectionBackground or object.textB
 	local textT = object.selected and style.blockAttachmentTextSelectionForeground or object.textT
 
-	screen.set(x, y, textB, object.typeB, "?"); x = x + 1
+	screen.set(x, y, textB, object.typeB, "в †"); x = x + 1
 	-- Text
 	screen.drawRectangle(x, y, object.width - typeLength - 5, 1, textB, textT, " "); x = x + 1
 	screen.drawText(x, y, textT, text.limit(object.text, object.width - typeLength - 7))
-	screen.drawText(object.x + object.width - 1, y, textB, "?")
+	screen.drawText(object.x + object.width - 1, y, textB, "в †")
 
 	-- if object.previewText or object.previewPicture then
 	-- 	screen.drawRectangle(object.x + 1, object.y + 1, object.width - 2, object.height - 1, 0xE1E1E1, 0x0, " ")
@@ -515,14 +515,14 @@ local function newAttachment(x, y, maxWidth, attachment, typeB, typeT, textB, te
 			end
 		end
 
-		local pixels = {"?", "?", "?", "?"}
+		local pixels = {"вЎЂ", "вЎ„", "вЎ†", "вЎ‡"}
 
 		object.text = ""
 		for i = 1, #values do
-			object.text = object.text .. (pixels[math.ceil(values[i] / maxValue * 4)] or "?")
+			object.text = object.text .. (pixels[math.ceil(values[i] / maxValue * 4)] or "вЎЂ")
 		end
 
-		-- object.text = attachment.audio_message.transcript or "N/A" -- перевод голосовухи
+		-- object.text = attachment.audio_message.transcript or "N/A" -- РїРµСЂРµРІРѕРґ РіРѕР»РѕСЃРѕРІСѓС…Рё
 	else
 		object.text = "N/A"
 	end
@@ -904,7 +904,7 @@ showUserProfile = function(peerID)
 
 			local userContainer = contentContainer:addChild(GUI.container(1, 1, contentContainer.width, 1))
 
-			-- Авочка
+			-- РђРІРѕС‡РєР°
 			local leftLayout = userContainer:addChild(GUI.layout(3, 2, 24, 1, 1, 1))
 			leftLayout:setAlignment(1, 1, GUI.ALIGNMENT_HORIZONTAL_LEFT, GUI.ALIGNMENT_VERTICAL_TOP)
 
@@ -921,7 +921,7 @@ showUserProfile = function(peerID)
 			fitToLastChild(avatarContainer, 1)
 			addPanel(avatarContainer, style.blockBackground)
 
-			-- Список друзяшек
+			-- РЎРїРёСЃРѕРє РґСЂСѓР·СЏС€РµРє
 			local function addFriendsList(title, titleCount, list)
 				if #list > 0 then
 					local rowsCount = math.min(math.ceil(#list / friendsDisplayColumns), friendsDisplayRows)
@@ -962,7 +962,7 @@ showUserProfile = function(peerID)
 			addFriendsList(localization.friends, result.all_friends_count, result.all_friends)
 			addFriendsList(localization.friendsOnline, result.online_friends_count, result.online_friends)
 
-			-- Инфа о юзвере
+			-- РРЅС„Р° Рѕ СЋР·РІРµСЂРµ
 			local rightLayout = userContainer:addChild(GUI.layout(leftLayout.localX + leftLayout.width + 2, 2, userContainer.width - leftLayout.width - 6, 1, 1, 1))
 			rightLayout:setAlignment(1, 1, GUI.ALIGNMENT_HORIZONTAL_LEFT, GUI.ALIGNMENT_VERTICAL_TOP)
 
@@ -1039,7 +1039,7 @@ showUserProfile = function(peerID)
 			end
 
 			if user.city then
-				addKeyAndValue(profileKeys.city, user.city.title == "Москва" and "Массква" or user.city.title)
+				addKeyAndValue(profileKeys.city, user.city.title == "РњРѕСЃРєРІР°" and "РњР°СЃСЃРєРІР°" or user.city.title)
 			end
 
 			addIfExists(user.relation, profileKeys.relation, localization.relationStatuses[user.sex > 0 and user.sex or 1][user.relation])
@@ -1054,7 +1054,7 @@ showUserProfile = function(peerID)
 
 			addIfExists(user.site, profileKeys.site, user.site)
 
-			-- Вот тута начинается дополнительная инфа
+			-- Р’РѕС‚ С‚СѓС‚Р° РЅР°С‡РёРЅР°РµС‚СЃСЏ РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅР°СЏ РёРЅС„Р°
 			local expandButton = infoLayout:addChild(GUI.button(1, 1, infoLayout.width, 2, nil, style.blockTextButton, nil, 0x0, ""))
 
 			local additionalLayout = infoLayout:addChild(GUI.layout(1, 1, infoLayout.width, 1, 1, 1))
@@ -1064,7 +1064,7 @@ showUserProfile = function(peerID)
 
 			layoutToAdd = additionalLayout
 
-			-- Основная инфа
+			-- РћСЃРЅРѕРІРЅР°СЏ РёРЅС„Р°
 			if anyExists(user.home_town, user.personal and user.personal.langs) then
 				addTitle(localization.profileTitleMainInformation)
 
@@ -1075,7 +1075,7 @@ showUserProfile = function(peerID)
 				end
 			end
 
-			-- Контакты
+			-- РљРѕРЅС‚Р°РєС‚С‹
 			if anyExists(user.mobile_phone, user.home_phone, user.skype, user.instagram, user.facebook) then
 				addTitle(localization.profileTitleContacts)
 
@@ -1117,7 +1117,7 @@ showUserProfile = function(peerID)
 				addIfExists(user.quotes, profileKeys.quotes, user.quotes)
 			end
 			
-			-- И снова добавляем в основной лейаут
+			-- Р СЃРЅРѕРІР° РґРѕР±Р°РІР»СЏРµРј РІ РѕСЃРЅРѕРІРЅРѕР№ Р»РµР№Р°СѓС‚
 			layoutToAdd = infoLayout
 
 			addTitle()
@@ -1149,7 +1149,7 @@ showUserProfile = function(peerID)
 				end
 			end
 
-			-- Стена
+			-- РЎС‚РµРЅР°
 			local wallLayout = rightLayout:addChild(GUI.layout(1, 1, rightLayout.width, 1, 1, 1))
 			wallLayout:setAlignment(1, 1, GUI.ALIGNMENT_HORIZONTAL_LEFT, GUI.ALIGNMENT_VERTICAL_TOP)
 
@@ -1185,19 +1185,19 @@ showUserProfile = function(peerID)
 			fitToLastChild(wallLayout, 0)
 
 			local function update()
-				-- Фиттим дополнительный лейаут
+				-- Р¤РёС‚С‚РёРј РґРѕРїРѕР»РЅРёС‚РµР»СЊРЅС‹Р№ Р»РµР№Р°СѓС‚
 				fitToLastChild(additionalLayout, 0)
-				-- Фиттим лейаут с инфой
+				-- Р¤РёС‚С‚РёРј Р»РµР№Р°СѓС‚ СЃ РёРЅС„РѕР№
 				fitToLastChild(infoLayout, 0)
-				-- Подгоняем контейнер под него
+				-- РџРѕРґРіРѕРЅСЏРµРј РєРѕРЅС‚РµР№РЅРµСЂ РїРѕРґ РЅРµРіРѕ
 				infoContainer.height = infoLayout.height + 2
 				infoPanel.height = infoContainer.height
-				-- Фиттим лево-правые лейауты
+				-- Р¤РёС‚С‚РёРј Р»РµРІРѕ-РїСЂР°РІС‹Рµ Р»РµР№Р°СѓС‚С‹
 				fitToLastChild(leftLayout, 1)
 				fitToLastChild(rightLayout, 1)
-				-- Фиттим весь юзер-контейнер с авой, друганами и всем дерьмом
+				-- Р¤РёС‚С‚РёРј РІРµСЃСЊ СЋР·РµСЂ-РєРѕРЅС‚РµР№РЅРµСЂ СЃ Р°РІРѕР№, РґСЂСѓРіР°РЅР°РјРё Рё РІСЃРµРј РґРµСЂСЊРјРѕРј
 				fitToLastChild(userContainer, 0)
-				-- Ой, кнопочка!
+				-- РћР№, РєРЅРѕРїРѕС‡РєР°!
 				expandButton.text = additionalLayout.hidden and localization.profileShowAdditional or localization.profileHideAdditional
 			end
 
@@ -1231,13 +1231,13 @@ local profileSelectable = addPizda(localization.profile)
 profileSelectable.onTouch = function()
 	showUserProfile(currentPeerID)
 
-	-- Яша
+	-- РЇС€Р°
 	-- showUserProfile(60991376)
 
-	-- Яна
+	-- РЇРЅР°
 	-- showUserProfile(155326634)
 
-	-- Крутой
+	-- РљСЂСѓС‚РѕР№
 	-- showUserProfile(21321257)
 end
 
@@ -1257,7 +1257,7 @@ local function showFriends(peerID)
 		]])
 
 		if result then
-			-- Удобнее!
+			-- РЈРґРѕР±РЅРµРµ!
 			local newLists = {}
 
 			for i = 1, #result.lists do
@@ -1431,7 +1431,7 @@ showConversations = function(peerID)
 				container.messagePreviewText.color = style.messageText
 				container.dateText.color = style.messageDate
 			end
-			-- Спиздим метод у этого контейнера. Надеюсь, он не обидится
+			-- РЎРїРёР·РґРёРј РјРµС‚РѕРґ Сѓ СЌС‚РѕРіРѕ РєРѕРЅС‚РµР№РЅРµСЂР°. РќР°РґРµСЋСЃСЊ, РѕРЅ РЅРµ РѕР±РёРґРёС‚СЃСЏ
 			contentContainer.draw(container)
 		end
 
@@ -1439,7 +1439,7 @@ showConversations = function(peerID)
 			for i = 1, #list.items do
 				local item = list.items[i]
 
-				-- Превью текста сообщеньки с вложениями и прочей залупой
+				-- РџСЂРµРІСЊСЋ С‚РµРєСЃС‚Р° СЃРѕРѕР±С‰РµРЅСЊРєРё СЃ РІР»РѕР¶РµРЅРёСЏРјРё Рё РїСЂРѕС‡РµР№ Р·Р°Р»СѓРїРѕР№
 				local messagePreview
 				if #item.last_message.text == 0 then
 					if #item.last_message.fwd_messages > 0 then
@@ -1463,7 +1463,7 @@ showConversations = function(peerID)
 					messagePreview = item.last_message.text
 				end
 
-				-- Префиксы для отправленных мною, либо же для имен отправителей в конфах
+				-- РџСЂРµС„РёРєСЃС‹ РґР»СЏ РѕС‚РїСЂР°РІР»РµРЅРЅС‹С… РјРЅРѕСЋ, Р»РёР±Рѕ Р¶Рµ РґР»СЏ РёРјРµРЅ РѕС‚РїСЂР°РІРёС‚РµР»РµР№ РІ РєРѕРЅС„Р°С…
 				if item.last_message.out == 1 then
 					messagePreview = localization.you ..	messagePreview
 				else
@@ -1659,7 +1659,7 @@ local function login()
 	local logo = layout:addChild(GUI.image(1, 1, image.load(scriptDirectory .. "Icon.pic")))
 	logo.height = logo.height + 1
 	local usernameInput = layout:addChild(GUI.input(1, 1, 36, 3, style.UIInputBackground, style.UIInputForeground, style.UIInputPlaceholder, style.UIInputBackground, style.UIInputFocusedForeground, config.username or "", localization.username))
-	local passwordInput = layout:addChild(GUI.input(1, 1, 36, 3, style.UIInputBackground, style.UIInputForeground, style.UIInputPlaceholder, style.UIInputBackground, style.UIInputFocusedForeground, config.password or "", localization.password, true, "•"))
+	local passwordInput = layout:addChild(GUI.input(1, 1, 36, 3, style.UIInputBackground, style.UIInputForeground, style.UIInputPlaceholder, style.UIInputBackground, style.UIInputFocusedForeground, config.password or "", localization.password, true, "вЂў"))
 	local loginButton = layout:addChild(GUI.button(1, 1, 36, 3, style.UIButtonDefaultBackground, style.UIButtonDefaultForeground, style.UIButtonPressedBackground, style.UIButtonPressedForeground, localization.login))
 	loginButton.colors.disabled = {
 		background = style.UIButtonDisabledBackground,
